@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.custom.i18n.resources"
+        	value="ApplicationResources" />
+
+		<package name="default" namespace="/" extends="struts-default">
+
+		<action name="">
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="homePage" class="homeClass">
+			<result name="success">/homePage.jsp</result>
+		</action>
+		
+		<action name="homePage.search" class="homeClass" method="searchPersonData">
+			<result name="success">/homePage.jsp</result>
+		</action>
+		
+		<action name="homePage.modifyPage" class="homeClass">
+			<result name="success" type="redirectAction">			
+			 	<param name="actionName">modifypersonPage</param>	
+			 	<param name="personId">${personId}</param>			 	
+			</result>
+		</action>
+		
+		<action name="homePage.searchPage" class="homeClass">
+			<result name="success" type="redirectAction">			
+			 	<param name="actionName">searchpersonPage</param>	
+			 			 	
+			</result>
+		</action>
+		
+		<action name="personPage" class="personClass">
+			<result name="success">/personPage.jsp</result>
+		</action>
+		
+		<action name="personPage.add" class="personClass" method="savePersonData">
+			<result name="success">/personPage.jsp</result>
+		</action>
+		
+		
+		<action name="searchpersonPage" class="searchPersonClass">
+			<result name="success">/searchpersonPage.jsp</result>
+		</action>
+		
+		<action name="searchpersonPage.search" class="searchPersonClass" method="searchPersonData">
+			<result name="success">/searchpersonPage.jsp</result>
+		</action>
+		
+		<action name="deletepersonPage" class="deletePersonClass">
+			<result name="success">/deletepersonPage.jsp</result>
+		</action>
+		
+		<action name="deletepersonPage.delete" class="deletePersonClass" method="deletePersonData">
+			<result name="success">/deletepersonPage.jsp</result>
+		</action>
+		
+		<action name="modifypersonPage" class="modifyPersonClass">
+			<result name="success">/modifypersonPage.jsp</result>
+		</action>
+		
+		<action name="modifypersonPage.addPerson" class="modifyPersonClass">
+			<result name="success" type="redirectAction">			
+			 	<param name="actionName">personPage</param>			 		 	
+			</result>
+		</action>
+		
+		<action name="modifypersonPage.update" class="modifyPersonClass" method="savePersonData">
+			<result name="success" type="redirectAction">			
+			 	<param name="actionName">homePage</param>			 		 	
+			</result>
+		</action>
+		
+		<action name="modifypersonPage.modify" class="modifyPersonClass" method="modifyPersonData">
+			<result name="success">/modifypersonPage.jsp</result>
+		</action>
+		
+		
+		
+	</package>
+</struts>

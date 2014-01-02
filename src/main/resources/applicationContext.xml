@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+		<property name="url"
+			value="jdbc:sqlite:mydb.db" /> <property
+			name="username" value="" /> 
+		<property name="password"
+			value="" />	
+			
+		
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.ericMartin.domain.Person</value>				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLiteDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				
+				<prop key="hibernate.connection.CharSet">utf8</prop>
+		        <prop key="hibernate.connection.characterEncoding">utf8</prop>
+		        <prop key="hibernate.connection.useUnicode">true</prop>
+        
+			</props>
+		</property>		
+	</bean>
+
+	<bean id="personDAO" class="com.ericMartin.dao.PersonDaoImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="homeClass" class="com.ericMartin.action.HomePageAction">
+		<property name="searchBean" ref="searchBean" />
+		<property name="personDao" ref="personDAO" />
+	 </bean>
+	
+	<bean id="personClass" class="com.ericMartin.action.PersonPageAction">
+		<property name="personDao" ref="personDAO" />
+		<property name="searchBean" ref="searchBean" />
+	</bean>
+	
+	<bean id="searchPersonClass" class="com.ericMartin.action.SearchPersonPageAction">
+	<property name="searchBean" ref="searchBean" />
+		<property name="personDao" ref="personDAO" />
+	</bean>
+	
+	<bean id="deletePersonClass" class="com.ericMartin.action.DeletePersonPageAction">
+	<property name="searchBean" ref="searchBean" />
+		<property name="personDao" ref="personDAO" />
+	</bean>
+	
+	<bean id="modifyPersonClass" class="com.ericMartin.action.ModifyPersonPageAction">
+	<property name="searchBean" ref="searchBean" />
+		<property name="personDao" ref="personDAO" />
+	</bean>
+
+	<bean id="searchBean" class="com.ericMartin.elasticsearch.ElasticSearchBean" />
+	
+
+
+
+
+</beans>
